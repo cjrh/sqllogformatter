@@ -99,3 +99,10 @@ root:
 
 The important bit is the `(): sqllogformatter.SQLLogFormatter`, which is how to tell
 logging's `dictConfig` to use a custom formatter object.
+
+## Other implementations
+
+As usual, I discover other implementations a minute or two after I upload to PyPI. These
+also look great:
+
+- https://github.com/henriquebastos/sqlformatter/blob/master/sqlformatter.py
