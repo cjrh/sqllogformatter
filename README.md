@@ -1,6 +1,7 @@
 # sqllogformatter
 
-A Python logging Formatter subclass for messages with SQL queries
+A Python logging Formatter subclass for messages with SQL queries. This
+package is intended for use during development, not production.
 
 ## Demo
 
@@ -51,4 +52,19 @@ What you can't see above is that the query itself has been colorized:
 
 ![Colorized SQL Query](colorsql.png)
 
+The colors run on a cycle (or you can pin it to a single color by affecting the
+colors in the sequence, check the constructor), and to demonstrate this a bit
+more clearly, let's turn off the stack dumper and run a few more queries:
+
+```python
+>>> formatter = SQLLogFormatter(fmt='%(asctime)s\n%(message)s\n', include_stack_info=False)
+>>> handler.setFormatter(formatter)
+```
+
+![A cycle of colors every time a new query is logged](allcolors.png)
+
+The benefit of having a color cycle is that it can make it much easier to keep
+track of different queries when scrolling forwards and backwards in a large list
+of log messages. Of course, you can always turn off colors by passing
+`colorcycle=None` in the constructor.
 
