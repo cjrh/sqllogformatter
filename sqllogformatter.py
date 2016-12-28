@@ -34,9 +34,10 @@ class SQLLogFormatter(logging.Formatter):
     """
     def __init__(self, fmt=None, datefmt=None,
                  colorcycle=('red', 'green', 'yellow', 'blue', 'magenta', 'cyan'),
-                 incude_stack_info=True,
+                 include_stack_info=True,
                  omit=DEFAULT_OMISSIONS):
         super(SQLLogFormatter, self).__init__(fmt, datefmt)
+        self.include_stack_info = include_stack_info
         self.colors = cycle(colorcycle)
         self.omit = omit
 
@@ -46,9 +47,12 @@ class SQLLogFormatter(logging.Formatter):
             record.msg = sqlparse.format(record.msg, reindent=True, keyword_case='upper')
             if self.colors:
                 record.msg = termcolor.colored(record.msg, next(self.colors))
-            frames = traceback.format_stack(inspect.currentframe())
-            stack = ''.join(f for f in frames if not any(_ in f for _ in self.omit))
-            record.msg = '\n' + stack + '\n' + record.msg
+            stack = ''
+            if self.include_stack_info:
+                frames = traceback.format_stack(inspect.currentframe())
+                stack = ''.join(f for f in frames if not any(_ in f for _ in self.omit))
+                stack = '\n' + stack + '\n'
+            record.msg = stack + record.msg
         except:
             logging.exception()
         return super(SQLLogFormatter, self).format(record)
