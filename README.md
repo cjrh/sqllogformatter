@@ -68,3 +68,34 @@ track of different queries when scrolling forwards and backwards in a large list
 of log messages. Of course, you can always turn off colors by passing
 `colorcycle=None` in the constructor.
 
+Finally, it's worth pointing out that if you want to set this up using a
+`logging.yaml` file, it'll have to look something like this:
+
+```yaml
+version: 1
+formatters:
+    query:
+        format: "%(asctime)-15s %(levelname)-6s %(name)s.%(funcName)s\n\n%(message)s \n"
+        (): sqllogformatter.SQLLogFormatter
+
+handlers:
+    sqlconsole:
+        class: logging.StreamHandler
+        level: INFO
+        formatter: query
+        stream: ext://sys.stdout
+
+
+loggers:
+    sqlalchemy.engine:
+      handlers: [sqlconsole]
+      level: INFO
+      propagate: 0
+
+root:
+    level: NOTSET
+    handlers: [console]
+```
+
+The important bit is the `(): sqllogformatter.SQLLogFormatter`, which is how to tell
+logging's `dictConfig` to use a custom formatter object.
