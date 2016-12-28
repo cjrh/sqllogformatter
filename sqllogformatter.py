@@ -1,7 +1,7 @@
 """ A logging formatter for SQL statements """
 
 
-__version__ = '2016.12.2'
+__version__ = '2016.12.3'
 import logging
 import inspect
 import traceback
