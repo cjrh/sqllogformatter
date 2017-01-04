@@ -45,7 +45,7 @@ Several things to notice:
 0. The query has been formatted neatly enough to allow you to copy and paste it
 into a DB tool for further analysis.
 0. The stack frames are given _at the time the query was generated_. This means
-that, for example, if you use **SQLAlchemy's** `DATABASE_ECHO=True` mode, you'll
+that, for example, if you use **SQLAlchemy's* `echo=True` mode, you'll
 get the locations in **your code** that generated each of the queries.
 
 What you can't see above is that the query itself has been colorized:
