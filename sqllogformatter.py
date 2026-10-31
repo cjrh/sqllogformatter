@@ -53,6 +53,6 @@ class SQLLogFormatter(logging.Formatter):
                 stack = ''.join(f for f in frames if not any(_ in f for _ in self.omit))
                 stack = '\n' + stack + '\n'
             record.msg = stack + record.msg
-        except:
-            logging.exception()
+        except Exception:
+            logging.exception("Failed to format sql log record")
         return super(SQLLogFormatter, self).format(record)
